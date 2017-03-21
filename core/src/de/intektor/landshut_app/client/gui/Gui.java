@@ -52,7 +52,7 @@ public class Gui implements InputProcessor, GuiButton.GuiButtonCallback {
     }
 
     /**
-     * Gets called when {@link LandshutAppClient#showGui(Gui)} loads this Gui
+     * Gets called when {@link LandshutAppClient#enterGui(Gui)} loads this Gui
      */
     public void enterGui() {
     }

@@ -1,6 +1,8 @@
 package de.intektor.landshut_app.client.render;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -22,5 +24,14 @@ public class RenderUtils {
         float rx = centerX ? x - FontUtils.getStringWidth(text, font) / 2 : x;
         float ry = centerY ? y + FontUtils.getStringHeight(text, font) / 2 : y;
         font.draw(spriteBatch, text, rx, ry);
+    }
+
+    public static void enableBlending() {
+        Gdx.gl.glEnable(GL20.GL_BLEND);
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+    }
+
+    public static void disableBlending() {
+        Gdx.gl.glDisable(GL20.GL_BLEND);
     }
 }

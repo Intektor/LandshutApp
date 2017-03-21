@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import de.intektor.landshut_app.client.gui.Gui;
+import de.intektor.landshut_app.client.gui.guis.GuiStartScreen;
 import de.intektor.landshut_app.client.render.RenderUtils;
 
 import java.util.Queue;
@@ -28,10 +29,15 @@ public class LandshutAppClient extends ApplicationAdapter {
     private OrthographicCamera camera;
     private Viewport viewport;
 
-    public BitmapFont defaultFont12;
+    public BitmapFont defaultFont32;
+    public BitmapFont defaultFont48;
+    public BitmapFont defaultFont54;
+    public BitmapFont defaultFont64;
+    public BitmapFont defaultFont72;
+    public BitmapFont defaultFont128;
 
-    private final int preferredScreenWidth = 1920;
-    private final int preferredScreenHeight = 1080;
+    private final int preferredScreenWidth = 1080;
+    private final int preferredScreenHeight = 1920;
 
     private ShapeRenderer defaultShapeRenderer;
     private SpriteBatch defaultSpriteBatch;
@@ -49,10 +55,20 @@ public class LandshutAppClient extends ApplicationAdapter {
         viewport.apply(false);
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 
-        FreeTypeFontGenerator gen = new FreeTypeFontGenerator(Gdx.files.internal("arial.ttf"));
+        FreeTypeFontGenerator gen = new FreeTypeFontGenerator(Gdx.files.internal("assets/font.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter param = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        param.size = 12;
-        defaultFont12 = gen.generateFont(param);
+        param.size = 32;
+        defaultFont32 = gen.generateFont(param);
+        param.size = 48;
+        defaultFont48 = gen.generateFont(param);
+        param.size = 54;
+        defaultFont54 = gen.generateFont(param);
+        param.size = 64;
+        defaultFont64 = gen.generateFont(param);
+        param.size = 72;
+        defaultFont72 = gen.generateFont(param);
+        param.size = 128;
+        defaultFont128 = gen.generateFont(param);
         gen.dispose();
 
         defaultShapeRenderer = new ShapeRenderer();
@@ -61,6 +77,8 @@ public class LandshutAppClient extends ApplicationAdapter {
         defaultSpriteBatch = new SpriteBatch();
         defaultSpriteBatch.setProjectionMatrix(camera.combined);
         defaultSpriteBatch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+
+        enterGui(new GuiStartScreen());
     }
 
     @Override
@@ -97,13 +115,13 @@ public class LandshutAppClient extends ApplicationAdapter {
         partialTicks = (System.currentTimeMillis() - lastTickTime) / (15.625f);
         SpriteBatch spriteBatch = new SpriteBatch();
         spriteBatch.begin();
-        RenderUtils.drawString(Gdx.graphics.getFramesPerSecond() + "", defaultFont12, 10, getPreferredScreenHeight() / 2, spriteBatch, Color.WHITE);
+        RenderUtils.drawString(Gdx.graphics.getFramesPerSecond() + "", defaultFont32, 10, getPreferredScreenHeight() / 2, spriteBatch, Color.WHITE);
         spriteBatch.end();
         spriteBatch.dispose();
         if (currentGui != null) currentGui.render(Gdx.input.getX(), Gdx.input.getY(), camera, partialTicks);
     }
 
-    public void showGui(Gui gui) {
+    public void enterGui(Gui gui) {
         if (currentGui != null) currentGui.exitGui();
         currentGui = gui;
         currentGui.enterGui();
